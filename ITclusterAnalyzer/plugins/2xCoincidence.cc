@@ -569,7 +569,7 @@ const SiPixelCluster* 2xCoincidence::findCoincidence2x(DetId thedetid, Global3DP
   
   unsigned int themodule = (tTopo->pxfModule(thedetid));
   unsigned int thering = (tTopo->pxfBlade(thedetid));
-  unsigned int thelayer = (tTopo->pxfDisk(thedetid));
+  unsigned int thedisk = (tTopo->pxfDisk(thedetid));
   unsigned int theside = (tTopo->pxfSide(thedetid));  
   
   //std::cout << thelayer << std::endl;
@@ -669,21 +669,21 @@ const SiPixelCluster* 2xCoincidence::findCoincidence2x(DetId thedetid, Global3DP
       if (theside == 1) {
 	
 	
-	m_dX[thelayer- 9][thering - 1] -> Fill(dX);
-	m_dY[thelayer -9][thering - 1] -> Fill(dY);
-	m_dR[thelayer - 9][thering - 1] -> Fill(dR);
-	m_dr[thelayer - 9][thering - 1] -> Fill(dr);
-	m_deltaphi[thelayer - 9][thering - 1] -> Fill(phi2-phi1);
+	m_dX[thedisk- 9][thering - 1] -> Fill(dX);
+	m_dY[thedisk -9][thering - 1] -> Fill(dY);
+	m_dR[thedisk - 9][thering - 1] -> Fill(dR);
+	m_dr[thedisk - 9][thering - 1] -> Fill(dr);
+	m_deltaphi[thedisk - 9][thering - 1] -> Fill(phi2-phi1);
 	
 	
 	if(areSame) {
 	  
 	  
-	  m_dX_sametrack[thelayer - 9][thering - 1] -> Fill(dX);
-	  m_dY_sametrack[thelayer - 9][thering - 1] -> Fill(dY);
-	  m_dR_sametrack[thelayer - 9][thering - 1] -> Fill(dR);
-	  m_dr_sametrack[thelayer - 9][thering - 1] -> Fill(dr);
-	  m_deltaphi_sametrack[thelayer - 9][thering - 1] -> Fill(phi2-phi1);
+	  m_dX_sametrack[thedisk - 9][thering - 1] -> Fill(dX);
+	  m_dY_sametrack[thedisk - 9][thering - 1] -> Fill(dY);
+	  m_dR_sametrack[thedisk - 9][thering - 1] -> Fill(dR);
+	  m_dr_sametrack[thedisk - 9][thering - 1] -> Fill(dr);
+	  m_deltaphi_sametrack[thedisk - 9][thering - 1] -> Fill(phi2-phi1);
 	  
 	  
 	}
@@ -692,11 +692,11 @@ const SiPixelCluster* 2xCoincidence::findCoincidence2x(DetId thedetid, Global3DP
 	else if(!areSame) {
 	  
 	  
-	  m_dX_notsametrack[thelayer - 9][thering - 1] -> Fill(dX);
-	  m_dY_notsametrack[thelayer - 9][thering - 1] -> Fill(dY);
-	  m_dR_notsametrack[thelayer - 9][thering - 1] -> Fill(dR);
-	  m_dr_notsametrack[thelayer - 9][thering - 1] -> Fill(dr);
-	  m_deltaphi_notsametrack[thelayer - 9][thering - 1] -> Fill(phi2-phi1);
+	  m_dX_notsametrack[thedisk - 9][thering - 1] -> Fill(dX);
+	  m_dY_notsametrack[thedisk - 9][thering - 1] -> Fill(dY);
+	  m_dR_notsametrack[thedisk - 9][thering - 1] -> Fill(dR);
+	  m_dr_notsametrack[thedisk - 9][thering - 1] -> Fill(dr);
+	  m_deltaphi_notsametrack[thedisk - 9][thering - 1] -> Fill(phi2-phi1);
 	  
 	  
 	} 
@@ -706,21 +706,21 @@ const SiPixelCluster* 2xCoincidence::findCoincidence2x(DetId thedetid, Global3DP
       
       if (theside == 2) {
 	
-	m_dX[thelayer- 5][thering - 1] -> Fill(dX);
-	m_dY[thelayer -5][thering - 1] -> Fill(dY);
-	m_dR[thelayer - 5][thering - 1] -> Fill(dR);
-	m_dr[thelayer - 5][thering - 1] -> Fill(dr);
-	m_deltaphi[thelayer - 5][thering - 1] -> Fill(phi2-phi1);
+	m_dX[thedisk- 5][thering - 1] -> Fill(dX);
+	m_dY[thedisk -5][thering - 1] -> Fill(dY);
+	m_dR[thedisk - 5][thering - 1] -> Fill(dR);
+	m_dr[thedisk - 5][thering - 1] -> Fill(dr);
+	m_deltaphi[thedisk - 5][thering - 1] -> Fill(phi2-phi1);
 	
 	
 	if(areSame) {
 	  
 	  
-	  m_dX_sametrack[thelayer - 5][thering - 1] -> Fill(dX);
-	  m_dY_sametrack[thelayer - 5][thering - 1] -> Fill(dY);
-	  m_dR_sametrack[thelayer - 5][thering - 1] -> Fill(dR);
-	  m_dr_sametrack[thelayer - 5][thering - 1] -> Fill(dr);
-	  m_deltaphi_sametrack[thelayer - 5][thering - 1] -> Fill(phi2-phi1);
+	  m_dX_sametrack[thedisk - 5][thering - 1] -> Fill(dX);
+	  m_dY_sametrack[thedisk - 5][thering - 1] -> Fill(dY);
+	  m_dR_sametrack[thedisk - 5][thering - 1] -> Fill(dR);
+	  m_dr_sametrack[thedisk - 5][thering - 1] -> Fill(dr);
+	  m_deltaphi_sametrack[thedisk - 5][thering - 1] -> Fill(phi2-phi1);
 	  
 	  
 	}
@@ -728,11 +728,11 @@ const SiPixelCluster* 2xCoincidence::findCoincidence2x(DetId thedetid, Global3DP
 	else if(!areSame) {
 	  
 	  
-	  m_dX_notsametrack[thelayer - 5][thering - 1] -> Fill(dX);
-	  m_dY_notsametrack[thelayer - 5][thering - 1] -> Fill(dY);
-	  m_dR_notsametrack[thelayer - 5][thering - 1] -> Fill(dR);
-	  m_dr_notsametrack[thelayer - 5][thering - 1] -> Fill(dr);
-	  m_deltaphi_notsametrack[thelayer - 5][thering - 1] -> Fill(phi2-phi1);
+	  m_dX_notsametrack[thedisk - 5][thering - 1] -> Fill(dX);
+	  m_dY_notsametrack[thedisk - 5][thering - 1] -> Fill(dY);
+	  m_dR_notsametrack[thedisk - 5][thering - 1] -> Fill(dR);
+	  m_dr_notsametrack[thedisk - 5][thering - 1] -> Fill(dr);
+	  m_deltaphi_notsametrack[thedisk - 5][thering - 1] -> Fill(phi2-phi1);
 	  
 	  
 	}
