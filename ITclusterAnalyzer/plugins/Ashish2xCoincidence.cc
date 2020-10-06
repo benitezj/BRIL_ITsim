@@ -69,7 +69,7 @@
 class Ashish2xCoincidence : public edm::one::EDAnalyzer<edm::one::SharedResources> {
 public:
   explicit Ashish2xCoincidence(const edm::ParameterSet&);
-  ~Ashish2xCoincidence5();
+  ~Ashish2xCoincidence();
   
   static void fillDescriptions(edm::ConfigurationDescriptions& descriptions);
   
