@@ -1,9 +1,9 @@
 // -*- C++ -*-
 //
 // Package:    BRIL_ITsim/ITclusterAnalyzer
-// Class:      Ashish2xCoincidence
+// Class:      2xCoincidence
 //
-/**\class Ashish2xCoincidence Ashish2xCoincidence.cc BRIL_ITsim/ITclusterAnalyzer/plugins/Ashish2xCoincidence.cc
+/**\class 2xCoincidence 2xCoincidence.cc BRIL_ITsim/ITclusterAnalyzer/plugins/2xCoincidence.cc
    Description: [one line class summary]
    Implementation:
    [Notes on implementation]
@@ -66,10 +66,10 @@
 
 
 
-class Ashish2xCoincidence : public edm::one::EDAnalyzer<edm::one::SharedResources> {
+class 2xCoincidence : public edm::one::EDAnalyzer<edm::one::SharedResources> {
 public:
-  explicit Ashish2xCoincidence(const edm::ParameterSet&);
-  ~Ashish2xCoincidence();
+  explicit 2xCoincidence(const edm::ParameterSet&);
+  ~2xCoincidence();
   
   static void fillDescriptions(edm::ConfigurationDescriptions& descriptions);
   
@@ -79,7 +79,7 @@ private:
   virtual void endJob() override;
   
   //bool findCoincidence(DetId, Global3DPoint, bool);
-  const SiPixelCluster* findCoincidence2x(DetId, Global3DPoint, bool, unsigned int&, edmNew::DetSet<SiPixelCluster>::const_iterator, unsigned int);
+  const SiPixelCluster* findCoincidence2x(DetId, Global3DPoint, unsigned int&, edmNew::DetSet<SiPixelCluster>::const_iterator, unsigned int);
   edm::DetSetVector<PixelDigiSimLink>::const_iterator findSimLinkDetSet(unsigned int thedetid);
   std::set<unsigned int> getSimTrackId(edm::DetSetVector<PixelDigiSimLink>::const_iterator, edmNew::DetSet<SiPixelCluster>::const_iterator, bool print);
   bool areSameSimTrackId(std::set<unsigned int> first, std::set<unsigned int> second, std::set<unsigned int>&);
@@ -171,7 +171,7 @@ private:
 //
 // constructors and destructor
 //
-Ashish2xCoincidence::Ashish2xCoincidence(const edm::ParameterSet& iConfig)
+2xCoincidence::2xCoincidence(const edm::ParameterSet& iConfig)
   : //m_tokenClusters(consumes<edmNew::DetSetVector<SiPixelCluster>> ("clusters"))
   m_tokenClusters(consumes<edmNew::DetSetVector<SiPixelCluster>>(iConfig.getParameter<edm::InputTag>("clusters")))
   , m_tokenSimLinks(consumes<edm::DetSetVector<PixelDigiSimLink>>(iConfig.getParameter<edm::InputTag>("simlinks")))
@@ -189,7 +189,7 @@ Ashish2xCoincidence::Ashish2xCoincidence(const edm::ParameterSet& iConfig)
   m_nevents = 0;
   
 }
-Ashish2xCoincidence::~Ashish2xCoincidence() {
+2xCoincidence::~2xCoincidence() {
   // do anything here that needs to be done at desctruction time
   // (e.g. close files, deallocate resources etc.)
 }
@@ -199,7 +199,7 @@ Ashish2xCoincidence::~Ashish2xCoincidence() {
 //
 
 // ------------ method called once each job just before starting event loop  ------------
-void Ashish2xCoincidence::beginJob() {
+void 2xCoincidence::beginJob() {
   
   edm::Service<TFileService> fs;
   
@@ -382,7 +382,7 @@ void Ashish2xCoincidence::beginJob() {
 
 
 // ------------ method called for each event  ------------
-void Ashish2xCoincidence::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup) {
+void 2xCoincidence::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup) {
   
   //get the digis - COB 26.02.19
   edm::Handle<edm::DetSetVector<PixelDigi>> tdigis;
@@ -489,9 +489,9 @@ void Ashish2xCoincidence::analyze(const edm::Event& iEvent, const edm::EventSetu
 	  if(((rawid >> 2) & 0xFF) % 2 != 0){
 	    
 	    unsigned int coincidenceId;
-	    unsigned int overlappingmodule = 1;
+	    unsigned int neighbor = 1;
 	    
-	    const SiPixelCluster* found2xcoincidencecluster = this->findCoincidence2x(detId, globalPosClu1, true, coincidenceId, cluit1, overlappingmodule);
+	    const SiPixelCluster* found2xcoincidencecluster = this->findCoincidence2x(detId, globalPosClu1, coincidenceId, cluit1, neighbor);
 	    
 	    if (found2xcoincidencecluster) {
 	      
@@ -533,7 +533,7 @@ void Ashish2xCoincidence::analyze(const edm::Event& iEvent, const edm::EventSetu
 
 
 // ------------ method called once each job just after ending the event loop  ------------
-void Ashish2xCoincidence::endJob() {
+void 2xCoincidence::endJob() {
   
   std::cout << "IT cluster Analyzer processed " << m_nevents << " events!" << std::endl;
   
@@ -542,7 +542,7 @@ void Ashish2xCoincidence::endJob() {
 
 
 // ------------ method fills 'descriptions' with the allowed parameters for the module  ------------
-void Ashish2xCoincidence::fillDescriptions(edm::ConfigurationDescriptions& descriptions) {
+void 2xCoincidence::fillDescriptions(edm::ConfigurationDescriptions& descriptions) {
   //The following says we do not know what parameters are allowed so do no validation
   // Please change this to state exactly what you do use, even if it is no parameters
   edm::ParameterSetDescription desc;
@@ -557,7 +557,7 @@ void Ashish2xCoincidence::fillDescriptions(edm::ConfigurationDescriptions& descr
 }
 
 
-const SiPixelCluster* Ashish2xCoincidence::findCoincidence2x(DetId thedetid, Global3DPoint globalPosClu1, bool isTEPX, unsigned int& foundDetId, edmNew::DetSet<SiPixelCluster>::const_iterator cluit1, unsigned int overlappingmodule) {
+const SiPixelCluster* 2xCoincidence::findCoincidence2x(DetId thedetid, Global3DPoint globalPosClu1, unsigned int& foundDetId, edmNew::DetSet<SiPixelCluster>::const_iterator cluit1, unsigned int neighbor) {
   
   const SiPixelCluster* found2xcoincidencecluster = NULL; 
   uint32_t rawid = thedetid.rawId();
@@ -581,7 +581,6 @@ const SiPixelCluster* Ashish2xCoincidence::findCoincidence2x(DetId thedetid, Glo
   uint32_t newmodule = themodule + 1;
   
   
-  if (isTEPX) {
     if (thering == 1 && themodule == 20)
       newmodule = 1;
     else if (thering == 2 && themodule == 28)
@@ -592,8 +591,7 @@ const SiPixelCluster* Ashish2xCoincidence::findCoincidence2x(DetId thedetid, Glo
       newmodule = 1;
     else if (thering == 5 && themodule == 48)
       newmodule = 1;
-  }
-  
+    
   
   //now encode
   newid = (newid & 0xFFFFFC03) | ((newmodule & 0xFF) << 2);
@@ -748,13 +746,13 @@ const SiPixelCluster* Ashish2xCoincidence::findCoincidence2x(DetId thedetid, Glo
 }
 
 
-edm::DetSetVector<PixelDigiSimLink>::const_iterator Ashish2xCoincidence::findSimLinkDetSet(unsigned int thedetid) {
+edm::DetSetVector<PixelDigiSimLink>::const_iterator 2xCoincidence::findSimLinkDetSet(unsigned int thedetid) {
   ////basic template
   edm::DetSetVector<PixelDigiSimLink>::const_iterator simLinkDS = simlinks->find(thedetid);
   return simLinkDS;
 }
 
-std::set<unsigned int> Ashish2xCoincidence::getSimTrackId(edm::DetSetVector<PixelDigiSimLink>::const_iterator simLinkDSViter, edmNew::DetSet<SiPixelCluster>::const_iterator cluster, bool print) {
+std::set<unsigned int> 2xCoincidence::getSimTrackId(edm::DetSetVector<PixelDigiSimLink>::const_iterator simLinkDSViter, edmNew::DetSet<SiPixelCluster>::const_iterator cluster, bool print) {
   int size = cluster->size();
   std::set<unsigned int> simTrackIds;
   
@@ -780,7 +778,7 @@ std::set<unsigned int> Ashish2xCoincidence::getSimTrackId(edm::DetSetVector<Pixe
 
 
 
-bool Ashish2xCoincidence::areSameSimTrackId(std::set<unsigned int> first, std::set<unsigned int> second, std::set<unsigned int>& intersection) {
+bool 2xCoincidence::areSameSimTrackId(std::set<unsigned int> first, std::set<unsigned int> second, std::set<unsigned int>& intersection) {
   //method to check if the sim Track id is present in both sets
   //std::set<unsigned int> intersection;
   std::set_intersection(first.begin(), first.end(), second.begin(), second.end(), std::inserter(intersection, intersection.begin()));
@@ -796,4 +794,4 @@ bool Ashish2xCoincidence::areSameSimTrackId(std::set<unsigned int> first, std::s
 }
 
 
-DEFINE_FWK_MODULE(Ashish2xCoincidence);
+DEFINE_FWK_MODULE(2xCoincidence);
